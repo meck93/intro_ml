@@ -1,11 +1,11 @@
 import numpy as np
 import math
+
 import pandas as pd
 from sklearn.model_selection import KFold
-from sklearn import cross_validation, tree, linear_model
+from sklearn import linear_model
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import explained_variance_score
-import statsmodels.api as sm
+from sklearn.metrics import mean_squared_error
 
 # personal csv reader module
 import reader
@@ -27,18 +27,22 @@ X = new_train_data.values
 Y = data['y'].values
 
 # splitting the training set into a training & validation set
-x_train, x_test, y_train, y_test = train_test_split(X, Y, test_size=0.2)
+x_train, x_val, y_train, y_val = train_test_split(X, Y, test_size=0.2)
 
 # simple regression model
-lin_reg = linear_model.LinearRegression(copy_X=True, normalize=True)
+lin_reg = linear_model.LinearRegression(fit_intercept=True, normalize=True, copy_X=True, n_jobs=4)
 lin_reg.fit(x_train, y_train)
 
-print(lin_reg.intercept_, lin_reg.coef_)
+intercept = lin_reg.intercept_
+coef = lin_reg.coef_
+print("intercept:", intercept, "coefficients:", coef)
 
-print(lin_reg.predict(x_test))
-print(lin_reg.score(x_test, y_test))
-print("Root Mean Square Error: %.2f" % math.sqrt(np.mean((lin_reg.predict(x_test) - y_test) ** 2)))
+x_val_predictions = lin_reg.predict(x_val)
 
+print("Score - X-Value Predictions vs. Real Values:", lin_reg.score(x_val, y_val))
+print("Root Mean Square Error: %.2f" % math.sqrt(np.mean((x_val_predictions - y_val) ** 2)))
+
+# # Writing the results to a .csv file
 # data = {'Id': test['Id'].values, 'y': lin_reg.predict(X_TEST)}
 # test_output = pd.DataFrame(data=data)
 # print(test_output.head(5))

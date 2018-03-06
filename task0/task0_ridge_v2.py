@@ -8,13 +8,6 @@ from sklearn.utils import shuffle
 from sklearn.model_selection import KFold
 from sklearn.linear_model import Ridge
 
-import os
-
-mingw_path = ";C:\Program Files\mingw-w64\x86_64-7.2.0-posix-sjlj-rt_v5-rev1\mingw64\bin"
-os.environ['PATH'] = os.environ['PATH'] + mingw_path
-
-import xgboost as xgb
-
 # personal csv reader module
 import reader
 
@@ -35,3 +28,4 @@ test = reader.read_csv(FILE_PATH_TEST)
 # splitting the test data set
 new_test_data = test[['x1', 'x2', 'x3', 'x4', 'x5', 'x6', 'x7', 'x8', 'x9', 'x10']]
 X_TEST = new_test_data.values
+
