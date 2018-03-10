@@ -1,13 +1,13 @@
-import numpy as np
 import math
-import pandas as pd
-from sklearn.linear_model import Ridge
-from sklearn.metrics import mean_squared_error
-from sklearn.model_selection import train_test_split, KFold
 
+import numpy as np
+import pandas as pd
 # import sys
 # sys.path.append('C:\\Users\\Moritz Eck\\code\\fs18\\intro_ml\\shared')
 import reader
+from sklearn.linear_model import Ridge
+from sklearn.metrics import mean_squared_error
+from sklearn.model_selection import KFold
 
 # FILE PATH: TRAINING FILE
 FILE_PATH_TRAIN = "train1a.csv"
@@ -31,7 +31,7 @@ Y = pd.DataFrame(data, columns=['y'], copy=True)
 Y = Y['y'].values
 
 # split into 80% intermediate (training + validation) and 20% test set
-x_intermediate, x_test, y_intermediate, y_test = train_test_split(X, Y, test_size=TEST_SIZE, shuffle=False)
+# x_intermediate, x_test, y_intermediate, y_test = train_test_split(X, Y, test_size=TEST_SIZE, shuffle=False)
 
 # storing the evaluation scores
 eval = []
