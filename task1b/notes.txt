@@ -1,0 +1,25 @@
+task1b_ridge_10-fold-cv_Nr1.csv
+	- ridge cv 10 fold
+	- manual 10-fold cross validation
+
+	Model Info
+	- Alpha: 20.0
+	- RMSE: 10.5415503974
+
+task1b_ridge_10-fold-cv_Nr2.csv
+	- ridge cv 10 fold
+	- alpha value: 17.52
+	- manual 10-fold cross validation
+
+task1b_elastic-net_10-fold-cv_Nr1.csv
+    - elastic net cv 10 fold
+    - l1_ratio = [.1, .5, .7, .9, .95, .99, 1.0]
+    - eps = 0.001
+    - auto determine alpha values
+
+    Error Estimate on Validation Set
+    - RMSE: 10.277504340158274
+
+    Model Info
+    - Alpha: 0.114697992557
+    - L1-Ratio: 1.0 => l1 penalty = LASSO
