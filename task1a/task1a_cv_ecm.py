@@ -7,11 +7,11 @@ import pandas as pd
 import reader
 from sklearn.linear_model import Ridge
 from sklearn.metrics import mean_squared_error
-from sklearn.model_selection import KFold
+from sklearn.model_selection import KFold, RepeatedKFold, train_test_split
 
 # FILE PATH: TRAINING FILE
 FILE_PATH_TRAIN = "train1a.csv"
-TEST_SIZE = 0.225
+TEST_SIZE = 0.2
 
 # alpha parameter values
 alphas = [0.1, 1.0, 10.0, 100.0, 1000.0]
@@ -30,8 +30,8 @@ X = X.values
 Y = pd.DataFrame(data, columns=['y'], copy=True)
 Y = Y['y'].values
 
-# split into 80% intermediate (training + validation) and 20% test set
-# x_intermediate, x_test, y_intermediate, y_test = train_test_split(X, Y, test_size=TEST_SIZE, shuffle=False)
+# split into intermediate (training + validation) and test set
+x_intermediate, x_test, y_intermediate, y_test = train_test_split(X, Y, test_size=TEST_SIZE, shuffle=False)
 
 # storing the evaluation scores
 eval = []
@@ -39,6 +39,8 @@ eval = []
 for entry in alphas:
     # creating the 10-fold split
     ten_fold = KFold(n_splits=10, shuffle=False)
+    repeat_ten_fold = RepeatedKFold(n_splits=10, n_repeats=10)
+
     # fold counter
     i = 1
     # create model
@@ -47,8 +49,8 @@ for entry in alphas:
     # errors
     errors = []
 
-    for train_ind, val_ind in ten_fold.split(X, Y):
-    # for train_ind, val_ind in ten_fold.split(x_intermediate, y_intermediate):
+    for train_ind, val_ind in repeat_ten_fold.split(X, Y):
+    # for train_ind, val_ind in repeat_ten_fold.split(x_intermediate, y_intermediate):
         # x & y training set (no separated test set)
         x_train = X[train_ind, : ]
         y_train = Y[train_ind]
@@ -93,4 +95,4 @@ for ind in range(0,5):
 # data = {"Result":eval}
 # alpha_rmnse_output = pd.DataFrame(data=eval)
 # print(alpha_rmnse_output.head(5))
-# alpha_rmnse_output.to_csv("alpha_mean_rmse_ecm_2.csv", sep=',', index=False, header=False)
+# alpha_rmnse_output.to_csv("alpha_mean_rmse_ecm_3.csv", sep=',', index=False, header=False)
