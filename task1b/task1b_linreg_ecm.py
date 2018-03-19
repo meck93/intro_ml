@@ -75,13 +75,17 @@ alphas = [10.0e-4, 10.0e-3, 10.0e-2, 10.0e-1, 10.0e0, 10.0, 20.0, 100.0]
 for entry in alphas:
     # creating the 10-fold split
     ten_fold = KFold(n_splits=10, shuffle=False)
+
     # fold counter
     i = 1
+
     # create model
     ridge = Ridge(alpha=entry, fit_intercept=True, normalize=False,
                   copy_X=True, max_iter=None, tol=1e-10, solver='auto')
+
     # errors per alpha value
     errors = []
+
     # coefficients per alpha value
     coeffs = []
 

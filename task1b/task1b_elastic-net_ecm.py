@@ -5,7 +5,7 @@ import pandas as pd
 import reader
 from sklearn.linear_model import ElasticNetCV
 from sklearn.metrics import mean_squared_error
-from sklearn.model_selection import KFold, train_test_split
+from sklearn.model_selection import KFold, rain_test_split
 
 # file path constants
 FILE_PATH_TRAIN = "train1b.csv"
@@ -69,14 +69,14 @@ x_train, x_val, y_train, y_val = train_test_split(X_transformed, Y, test_size=0.
 # alpha parameter values
 alphas = [10.0e-4, 10.0e-3, 10.0e-2, 10.0e-1, 10.0e0, 10.0, 100.0]
 
-# l1 parameters
-l1_params = [.1, .5, .6, .7, .8, .9, .95, .99, 1.0]
+# l1 ratios
+l1_ratios = [.1, .5, .6, .7, .8, .9, .95, .99, 1.0]
 
 # creating the 10-fold split
 ten_fold = KFold(n_splits=10, shuffle=False)
 
 # create model
-elasticCV = ElasticNetCV(l1_ratio=l1_params, eps=0.001, n_alphas=1000, alphas=None,
+elasticCV = ElasticNetCV(l1_ratio=l1_ratios, eps=0.001, n_alphas=1000, alphas=None,
                          fit_intercept=True, normalize=False, precompute='auto',
                          max_iter=1000, tol=0.0001, cv=ten_fold, copy_X=True,
                          n_jobs=-1, positive=False, selection='random')
@@ -100,7 +100,7 @@ print()
 print("Error Estimate on Validation Set")
 print("RMSE:", rmse)
 print()
-print("Model Info")
+print("Model Info:", "Elastic Net Cross Validation")
 print("Alpha:", elasticCV.alpha_)
 print("L1-Ratio:", elasticCV.l1_ratio_)
 print()
