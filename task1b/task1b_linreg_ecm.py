@@ -118,7 +118,7 @@ for entry in alphas:
 
         # increment fold counter
         i += 1
-    # print()
+
     # compute mean errors for rmse of each alpha
     eval.append(np.mean(errors))
 

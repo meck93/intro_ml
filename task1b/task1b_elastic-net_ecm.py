@@ -5,7 +5,7 @@ import pandas as pd
 import reader
 from sklearn.linear_model import ElasticNetCV
 from sklearn.metrics import mean_squared_error
-from sklearn.model_selection import KFold, rain_test_split
+from sklearn.model_selection import KFold, train_test_split
 
 # file path constants
 FILE_PATH_TRAIN = "train1b.csv"
