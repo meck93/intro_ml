@@ -1,0 +1,7 @@
+1. extract x and y values
+2. count different type of y-values
+    2.1 640 0s
+    2.2 673 1s
+    2.3 687 2s
+3. compute mean and standard deviation of each x-value component
+4. normalize data
