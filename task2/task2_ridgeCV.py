@@ -1,6 +1,8 @@
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split, RepeatedKFold
 from sklearn.linear_model import RidgeClassifierCV
+from sklearn.preprocessing import StandardScaler
+
 import numpy as np
 import math
 import sys
@@ -25,14 +27,19 @@ x_component_training = x_values_training.values
 # extracting the y-values
 y_component_training = training_data['y'].values
 
+# scaling the x value components
+scaler = StandardScaler()
+scaler = scaler.fit(x_component_training)
+x_train_scaled = scaler.transform(x_component_training)
+
 # splitting the training set into a intermediate (training + validation) & test set
-x_inter, x_test, y_inter, y_test = train_test_split(x_component_training, y_component_training, test_size=TEST_SIZE)
+x_inter, x_test, y_inter, y_test = train_test_split(x_train_scaled, y_component_training, test_size=TEST_SIZE)
 
 # alpha parameter values
-alphas = [10.0e-4, 10.0e-3, 10.0e-2, 10.0e-1, 10.0e0, 10.0, 100.0]
+alphas = [0.00001, .0001, .001, .01, .1, 1., 10., 100.]
 
 # repeated ten-fold cross validation
-repeated_ten_fold = RepeatedKFold(n_splits=10, n_repeats=5)
+repeated_ten_fold = RepeatedKFold(n_splits=10, n_repeats=10)
 
 # create the classification model
 ridgeCV = RidgeClassifierCV(alphas=alphas, fit_intercept=True, normalize=False, cv=repeated_ten_fold)
