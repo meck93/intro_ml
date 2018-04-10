@@ -1,5 +1,5 @@
 from sklearn.metrics import accuracy_score
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, GridSearchCV, RepeatedKFold
 from sklearn.neural_network import MLPClassifier
 from sklearn.preprocessing import StandardScaler
 
@@ -36,21 +36,29 @@ x_train_scaled = scaler.transform(x_component_training)
 x_inter, x_test, y_inter, y_test = train_test_split(x_train_scaled, y_component_training, test_size=TEST_SIZE)
 
 # create the classification model
-mlp = MLPClassifier(activation='relu', alpha=0.1, batch_size='auto', beta_1=0.9, beta_2=0.999, early_stopping=False, epsilon=1e-08,
-                    hidden_layer_sizes=100, learning_rate='constant', learning_rate_init=0.001, max_iter=500, momentum=0.9, 
-                    nesterovs_momentum=True, power_t=0.5, random_state=None, shuffle=True, solver='lbfgs', tol=1e-07, 
-                    validation_fraction=0.1, verbose=False, warm_start=False)
+mlp = MLPClassifier(activation='relu', solver='lbfgs', batch_size='auto', shuffle=True, verbose=False, warm_start=False)
+
+# parameters to be optimzed
+params = [{'hidden_layer_sizes': (10, 10), 'tol': [1e-5, 1e-6, 1e-7], 'alpha': [1e0, 1e-1, 1e-2]}]
+
+# 10 fold cv
+repeated_ten_fold = RepeatedKFold(n_splits=10, n_repeats=1, random_state=None)
+
+# discover the best alpha value
+searcher = GridSearchCV(estimator=mlp, param_grid=params, scoring='accuracy', n_jobs=1, iid=True, refit=True, cv=repeated_ten_fold, 
+                        verbose=1, pre_dispatch='2*n_jobs', error_score='raise', return_train_score='warn')
 
 # fit the training data
-mlp.fit(x_inter, y_inter)
+searcher.fit(x_inter, y_inter)
+print(sorted(searcher.cv_results_))
+print(searcher.best_estimator_)
 
 # predicting the y-values of x_val
-y_pred = mlp.predict(x_test)
+y_pred = searcher.predict(x_test)
 
 # compare real vs prediction
 print("The first 5 real y-values:", y_test[0:5])
 print("The first 5 y-value predictions", y_pred[0:5])
-# print("The probability for the first 5 x-values:", mlp.predict_proba(x_test[0:5]))
 
 # computing error metrics
 print("Accuracy Score", accuracy_score(y_test, y_pred))

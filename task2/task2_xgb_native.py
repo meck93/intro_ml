@@ -86,14 +86,6 @@ e_stop = 100
 # evaluation metrics for cv
 eval_metric = ['mlogloss', 'merror']
 
-# # xgboost cross validation 
-# cv_result = xgb.cv(params=param, dtrain=xg_train, num_boost_round=rounds, nfold=10, maximize=False, 
-#                    metrics=eval_metric, early_stopping_rounds=e_stop, show_stdv=True, verbose_eval=True)
-
-# print(cv_result.shape[0])
-# print(sorted(cv_result))
-# print(cv_result)
-
 # train the xgboost model
 bst = xgb.train(params=param, dtrain=xg_train, num_boost_round=rounds, evals=watchlist, early_stopping_rounds=e_stop, verbose_eval=True)
 

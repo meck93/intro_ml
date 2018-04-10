@@ -5,3 +5,14 @@
     2.3 687 2s
 3. compute mean and standard deviation of each x-value component
 4. normalize data
+
+option 1: xgboost library
+- learning rate - eta - matters (large impact)
+- max tree depth matters (large impact - can overfit)
+- using lambda for l2-regularization with 1.0
+- use early stopping when validation error hasn't decreaesed in 50 rounds
+
+option 2: mlp sklearn library
+- used gridsearchercv to find the best combination of hyperparameters
+-- solved for # hidden layers, tolerance, max_iterations, solvers (lbgfs vs sgd), learning_rate (adaptive vs constant)
+- used momentum 0.9, early stopping, validation_fraction 0.2
