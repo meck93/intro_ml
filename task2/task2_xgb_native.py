@@ -15,8 +15,8 @@ import xgboost as xgb
 # personal csv reader module
 import reader
 
-FILE_PATH_TRAIN = "train.csv"
-FILE_PATH_TEST = "test.csv"
+FILE_PATH_TRAIN = "./input/train.csv"
+FILE_PATH_TEST = "./input/test.csv"
 TEST_SIZE = 0.25
 
 # read training file
