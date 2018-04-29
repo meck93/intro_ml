@@ -45,8 +45,7 @@ params = [{'hidden_layer_sizes': (10, 10), 'tol': [1e-5, 1e-6, 1e-7], 'alpha': [
 repeated_ten_fold = RepeatedKFold(n_splits=10, n_repeats=1, random_state=None)
 
 # discover the best alpha value
-searcher = GridSearchCV(estimator=mlp, param_grid=params, scoring='accuracy', n_jobs=1, iid=True, refit=True, cv=repeated_ten_fold, 
-                        verbose=1, pre_dispatch='2*n_jobs', error_score='raise', return_train_score='warn')
+searcher = GridSearchCV(estimator=mlp, param_grid=params, scoring='accuracy', n_jobs=1, iid=True, refit=True, cv=repeated_ten_fold, verbose=1, pre_dispatch='2*n_jobs', error_score='raise', return_train_score='warn')
 
 # fit the training data
 searcher.fit(x_inter, y_inter)
