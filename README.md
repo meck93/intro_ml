@@ -1,2 +1,2 @@
-# intro_ml
-Exercises of the Introduction to Machine Learning Class (ETHZ - FS18)
+# Introduction to Machine Learning
+Exercises of the Introduction to Machine Learning Course
